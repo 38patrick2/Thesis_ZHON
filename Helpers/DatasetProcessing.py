@@ -36,7 +36,8 @@ def visualize_data(image_array, initial_filename, resized = False):
     save_image.save(output_path)
     
 def initial_size(data, fixed_width):
-    return np.reshape(data, (fixed_width, -1))
+    truncated_data = data[:len(data) - data % fixed_width]
+    return np.reshape(truncated_data, (fixed_width, -1))
 
 # modify the files size
 def handle_size(data, image_size):
