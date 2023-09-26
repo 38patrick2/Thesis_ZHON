@@ -36,9 +36,8 @@ def visualize_data(image_array, filename, resized = False):
     save_image.save(output_path)
     
 def initial_size(data, fixed_width):
-    n = len(data) / fixed_width
-    data = np.pad(data, (0, (n + 1) * fixed_width), 'constant', constant_values=0)
-    
+    data = np.pad(data, (0, fixed_width - (len(data) % fixed_width)), 'constant', constant_values=0)
+
     return np.reshape(data, ( -1, fixed_width))
 
 # modify the files size
