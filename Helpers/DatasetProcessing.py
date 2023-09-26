@@ -22,6 +22,21 @@ def read_bytes(filepath):
         hex_values = f.read().split()[1:] # read contents of the file, split, and skip header
         byte_values = [int(val, 16) for val in hex_values if val != '??'] # convert each hex value to its int repres and skipping values that are '??'(I ran into some errors due to '??')
         return np.array(byte_values, dtype=np.uint8) # convert list to unsigned 8-bit int array
+    
+def visualize_data(image_array, initial_filename, resized = False):
+    filename = initial_filename
+    if resized is True:
+        filename = filename + "_resized"
+    
+    pil_image = Image.fromarray(image_array, 'L') # convert byte array to greyscale
+    transformed_image = transform(pil_image) # convert to tensor and apply normalization 
+    save_image = transforms.ToPILImage()(transformed_image) # convert back to image
+    output_filename = os.path.splitext(filename)[0] + '.png' #remove .bytes and add .png
+    output_path = os.path.join(OUTPUT_DIR, output_filename)
+    save_image.save(output_path)
+    
+def initial_size(data, fixed_width):
+    return np.reshape(data, (fixed_width, -1))
 
 # modify the files size
 def handle_size(data, image_size):
@@ -45,13 +60,12 @@ for filename in os.listdir(DATA_DIR):
         filepath = os.path.join(DATA_DIR, filename)
         bytes_array = read_bytes(filepath)
         
+        image_array = initial_size(bytes_array)
+        visualize_data(image_array)
+        
         image_array = handle_size(bytes_array, IMAGE_SIZE)
-        pil_image = Image.fromarray(image_array, 'L') # convert byte array to greyscale
-        transformed_image = transform(pil_image) # convert to tensor and apply normalization 
-        save_image = transforms.ToPILImage()(transformed_image) # convert back to image
-        output_filename = os.path.splitext(filename)[0] + '.png' #remove .bytes and add .png
-        output_path = os.path.join(OUTPUT_DIR, output_filename)
-        save_image.save(output_path)
+        visualize_data(image_array, True)
+       
         
         # update log
         with open(PROCESSED_LOG, 'a') as f:
