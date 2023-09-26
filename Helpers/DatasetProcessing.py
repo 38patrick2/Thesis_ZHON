@@ -36,8 +36,10 @@ def visualize_data(image_array, filename, resized = False):
     save_image.save(output_path)
     
 def initial_size(data, fixed_width):
-    truncated_data = data[:len(data) - len(data) % fixed_width]
-    return np.reshape(truncated_data, ( -1, fixed_width))
+    n = len(data) / fixed_width
+    data = np.pad(data, (0, (n + 1) * fixed_width), 'constant', constant_values=0)
+    
+    return np.reshape(data, ( -1, fixed_width))
 
 # modify the files size
 def handle_size(data, image_size):
@@ -62,11 +64,9 @@ for filename in os.listdir(DATA_DIR):
         bytes_array = read_bytes(filepath)
         
         image_array = initial_size(bytes_array, IMAGE_SIZE)
-        print("ceva")
         visualize_data(image_array, filename)
         
         image_array = handle_size(bytes_array, IMAGE_SIZE)
-        print("ceva2")
         visualize_data(image_array, filename, True)
        
         
