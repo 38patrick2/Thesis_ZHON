@@ -60,7 +60,7 @@ for filename in os.listdir(DATA_DIR):
         filepath = os.path.join(DATA_DIR, filename)
         bytes_array = read_bytes(filepath)
         
-        image_array = initial_size(bytes_array)
+        image_array = initial_size(bytes_array, IMAGE_SIZE)
         visualize_data(image_array)
         
         image_array = handle_size(bytes_array, IMAGE_SIZE)
