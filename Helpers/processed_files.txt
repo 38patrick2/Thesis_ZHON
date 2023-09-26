@@ -1,0 +1,13 @@
+_nvtopps.bytes
+_Wc.bytes
+0ae3b998-9a38-4b72-a4c4-06849441518d_Servicing-Stack.bytes
+0B8959B5-5594-4761-9432-78ED542BAF42.bytes
+0E89EB0D-C63C-428B-B765-86D69AB356EF.bytes
+0F985EE0-D71D-4529-B21C-3E5B5692B64D.bytes
+0Harmony.bytes
+1675247127zDFJhUJKRazerStringTranslationsSetup_v3.8.0130.020117.bytes
+1677028171tyrhA2jURazerStringTranslationsSetup_v3.8.0228.022203.bytes
+1679037715sB4dxgl5RazerStringTranslationsSetup_v3.8.0330.031714.bytes
+1685419132mGgywMpVRazerStringTranslationsSetup_v3.8.0531.053011.bytes
+1687405298zXozYAgvRazerMacroSetup_v3.8.0630.062205.bytes
+1688109645v8XSlpMORazerStringTranslationsSetup_v3.8.0630.063014.bytes

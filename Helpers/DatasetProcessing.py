@@ -6,7 +6,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 
 IMAGE_SIZE = 224 
-DATA_DIR = '.' # were to take the files from
+DATA_DIR = 'E:\\University\\ZHON\Backup\\bytes_files\\bytes_files' # were to take the files from
 OUTPUT_DIR = '.\\Greyscales' # were to output the greyscales
 PROCESSED_LOG = 'processed_files.txt' # log gile to save progress
 
@@ -23,21 +23,21 @@ def read_bytes(filepath):
         byte_values = [int(val, 16) for val in hex_values if val != '??'] # convert each hex value to its int repres and skipping values that are '??'(I ran into some errors due to '??')
         return np.array(byte_values, dtype=np.uint8) # convert list to unsigned 8-bit int array
     
-def visualize_data(image_array, initial_filename, resized = False):
-    filename = initial_filename
-    if resized is True:
-        filename = filename + "_resized"
-    
+def visualize_data(image_array, filename, resized = False):
+
     pil_image = Image.fromarray(image_array, 'L') # convert byte array to greyscale
     transformed_image = transform(pil_image) # convert to tensor and apply normalization 
     save_image = transforms.ToPILImage()(transformed_image) # convert back to image
-    output_filename = os.path.splitext(filename)[0] + '.png' #remove .bytes and add .png
+    output_filename = os.path.splitext(filename)[0]  #remove .bytes and add .png
+    if resized is True:
+        output_filename = output_filename + "_resized"
+    output_filename = output_filename + '.png'
     output_path = os.path.join(OUTPUT_DIR, output_filename)
     save_image.save(output_path)
     
 def initial_size(data, fixed_width):
-    truncated_data = data[:len(data) - data % fixed_width]
-    return np.reshape(truncated_data, (fixed_width, -1))
+    truncated_data = data[:len(data) - len(data) % fixed_width]
+    return np.reshape(truncated_data, ( -1, fixed_width))
 
 # modify the files size
 def handle_size(data, image_size):
@@ -62,10 +62,12 @@ for filename in os.listdir(DATA_DIR):
         bytes_array = read_bytes(filepath)
         
         image_array = initial_size(bytes_array, IMAGE_SIZE)
-        visualize_data(image_array)
+        print("ceva")
+        visualize_data(image_array, filename)
         
         image_array = handle_size(bytes_array, IMAGE_SIZE)
-        visualize_data(image_array, True)
+        print("ceva2")
+        visualize_data(image_array, filename, True)
        
         
         # update log
